@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <div class="dashboard">
+        <div class="container">
+            <!-- Search and Filters -->
+            <div class="filters-section" style="background: white; padding: 2rem; border-radius: 10px; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <h2 style="margin-bottom: 1.5rem; color: var(--kenya-green);">
+                    <i class="fas fa-search"></i> Find Your Perfect Caregiver
+                </h2>
+                
+                <form action="/client/caregivers" method="GET" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Specialization</label>
+                        <select name="specialization" class="form-control">
+                            <option value="">All Specializations</option>
+                            <option value="childcare" <%= filters.specialization === 'childcare' ? 'selected' : '' %>>Child Care</option>
+                            <option value="elderly" <%= filters.specialization === 'elderly' ? 'selected' : '' %>>Elderly Care</option>
+                            <option value="disability" <%= filters.specialization === 'disability' ? 'selected' : '' %>>Disability Care</option>
+                            <option value="special-needs" <%= filters.specialization === 'special-needs' ? 'selected' : '' %>>Special Needs</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">County</label>
+                        <input type="text" name="county" class="form-control" placeholder="Enter county" value="<%= filters.county || '' %>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Minimum Rating</label>
+                        <select name="minRating" class="form-control">
+                            <option value="">Any Rating</option>
+                            <option value="4" <%= filters.minRating === '4' ? 'selected' : '' %>>4 Stars & Above</option>
+                            <option value="3" <%= filters.minRating === '3' ? 'selected' : '' %>>3 Stars & Above</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Availability</label>
+                        <select name="availability" class="form-control">
+                            <option value="">Any Availability</option>
+                            <option value="full-time" <%= filters.availability === 'full-time' ? 'selected' : '' %>>Full Time</option>
+                            <option value="part-time" <%= filters.availability === 'part-time' ? 'selected' : '' %>>Part Time</option>
+                            <option value="on-call" <%= filters.availability === 'on-call' ? 'selected' : '' %>>On Call</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-filter"></i> Apply Filters
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Caregivers Grid -->
+            <div class="caregivers-grid">
+                <% if (caregivers && caregivers.length > 0) { %>
+                    <% caregivers.forEach(caregiver => { %>
+                        <div class="caregiver-card">
+                            <div class="caregiver-header">
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div style="width: 80px; height: 80px; background: var(--kenya-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white;">
+                                        <%= caregiver.User.firstName.charAt(0) + caregiver.User.lastName.charAt(0) %>
+                                    </div>
+                                    <div>
+                                        <h3 style="margin: 0; color: white;">
+                                            <%= caregiver.User.firstName %> <%= caregiver.User.lastName %>
+                                        </h3>
+                                        <p style="margin: 0.5rem 0 0 0; opacity: 0.9;">
+                                            <i class="fas fa-map-marker-alt"></i> <%= caregiver.location %>, <%= caregiver.county %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="caregiver-body">
+                                <!-- Rating -->
+                                <div class="caregiver-rating">
+                                    <% for(let i = 1; i <= 5; i++) { %>
+                                        <% if (i <= Math.floor(caregiver.rating)) { %>
+                                            <i class="fas fa-star" style="color: var(--kenya-gold);"></i>
+                                        <% } else if (i === Math.ceil(caregiver.rating) && caregiver.rating % 1 !== 0) { %>
+                                            <i class="fas fa-star-half-alt" style="color: var(--kenya-gold);"></i>
+                                        <% } else { %>
+                                            <i class="far fa-star" style="color: #ddd;"></i>
+                                        <% } %>
+                                    <% } %>
+                                    <span style="color: var(--gray-medium); margin-left: 0.5rem;">
+                                        (<%= caregiver.rating.toFixed(1) %> • <%= caregiver.totalReviews %> reviews)
+                                    </span>
+                                </div>
+                                
+                                <!-- Specialization -->
+                                <div style="margin: 1rem 0;">
+                                    <span style="background: var(--kenya-green); color: white; padding: 0.25rem 1rem; border-radius: 20px; font-size: 0.9rem;">
+                                        <i class="fas fa-certificate"></i> <%= caregiver.specialization %>
+                                    </span>
+                                </div>
+                                
+                                <!-- Details -->
+                                <div style="margin: 1rem 0;">
+                                    <p><i class="fas fa-briefcase"></i> <strong>Experience:</strong> <%= caregiver.experienceYears %> years</p>
+                                    <p><i class="fas fa-money-bill-wave"></i> <strong>Hourly Rate:</strong> KES <%= caregiver.hourlyRate %></p>
+                                    <p><i class="fas fa-clock"></i> <strong>Availability:</strong> <%= caregiver.availability %></p>
+                                    <p><i class="fas fa-language"></i> <strong>Languages:</strong> <%= caregiver.languages %></p>
+                                </div>
+                                
+                                <!-- Bio -->
+                                <div style="margin: 1rem 0;">
+                                    <p style="color: var(--gray-medium); font-size: 0.9rem;">
+                                        <%= caregiver.bio.substring(0, 150) %>...
+                                    </p>
+                                </div>
+                                
+                                <!-- Action Buttons -->
+                                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                                    <a href="/client/caregiver/<%= caregiver.id %>" class="btn" style="flex: 1; text-align: center; background: var(--kenya-green); color: white;">
+                                        <i class="fas fa-eye"></i> View Profile
+                                    </a>
+                                    <a href="/client/payment/<%= caregiver.id %>" class="btn" style="flex: 1; text-align: center; background: var(--kenya-red); color: white;">
+                                        <i class="fas fa-handshake"></i> Hire Now
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <div style="text-align: center; padding: 4rem; background: white; border-radius: 10px;">
+                        <i class="fas fa-users" style="font-size: 4rem; color: #ddd; margin-bottom: 1rem;"></i>
+                        <h3 style="color: var(--gray-medium);">No caregivers found</h3>
+                        <p>Try adjusting your search filters</p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

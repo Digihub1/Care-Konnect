@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <div style="padding: 4rem 2rem; background: linear-gradient(135deg, var(--kenya-green), var(--kenya-black)); color: white; text-align: center;">
+        <div class="container">
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">Choose Your Role</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem;">Select how you want to join TunzaCare</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <a href="/register/client" style="text-decoration: none;">
+                    <div style="background: white; padding: 2rem; border-radius: 10px; text-align: center; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <i class="fas fa-user-friends" style="font-size: 3rem; color: var(--kenya-red); margin-bottom: 1rem;"></i>
+                        <h3 style="color: var(--kenya-red); margin-bottom: 0.5rem;">Looking for Care?</h3>
+                        <p style="color: var(--gray-medium);">I need to hire a caregiver</p>
+                    </div>
+                </a>
+
+                <a href="/register/caregiver" style="text-decoration: none;">
+                    <div style="background: white; padding: 2rem; border-radius: 10px; text-align: center; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <i class="fas fa-hands-helping" style="font-size: 3rem; color: var(--kenya-green); margin-bottom: 1rem;"></i>
+                        <h3 style="color: var(--kenya-green); margin-bottom: 0.5rem;">Provide Care</h3>
+                        <p style="color: var(--gray-medium);">I am a professional caregiver</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+    <script src="/js/script.js"></script>
+</body>
+</html>

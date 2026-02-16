@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TunzaCare - <%= title || 'Home' %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <a href="/" class="logo">
+                    <i class="fas fa-hands-helping"></i>
+                    <span>TunzaCare</span>
+                </a>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/caregivers" class="nav-link">Caregivers</a></li>
+                <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="/services" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+                
+                <% if (user) { %>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle">
+                            <i class="fas fa-user-circle"></i> <%= user.name %>
+                        </a>
+                        <div class="dropdown-menu">
+                            <% if (user.role === 'client') { %>
+                                <a href="/client/portal" class="dropdown-item">Dashboard</a>
+                                <a href="/client/bookings" class="dropdown-item">My Bookings</a>
+                            <% } else if (user.role === 'caregiver') { %>
+                                <a href="/caregiver/dashboard" class="dropdown-item">Dashboard</a>
+                                <a href="/caregiver/schedule" class="dropdown-item">Schedule</a>
+                            <% } else if (user.role === 'admin') { %>
+                                <a href="/admin/dashboard" class="dropdown-item">Admin Panel</a>
+                            <% } %>
+                            <a href="/profile" class="dropdown-item">Profile</a>
+                            <a href="/logout" class="dropdown-item">Logout</a>
+                        </div>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item">
+                        <a href="/login" class="btn btn-outline">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/register" class="btn btn-primary">Sign Up</a>
+                    </li>
+                <% } %>
+            </ul>
+            
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>

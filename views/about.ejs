@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <section style="background: var(--kenya-green); color: white; padding: 4rem 2rem; text-align: center;">
+        <div class="container">
+            <h1 style="font-size: 3rem; margin-bottom: 1rem;">About TunzaCare</h1>
+            <p style="font-size: 1.2rem;">Connecting compassionate caregivers with families in need across Kenya</p>
+        </div>
+    </section>
+
+    <section style="padding: 4rem 2rem;">
+        <div class="container">
+            <div style="max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                <h2 style="color: var(--kenya-green); margin-bottom: 1.5rem;">Our Mission</h2>
+                <p style="margin-bottom: 2rem; font-size: 1.1rem;">
+                    TunzaCare is dedicated to revolutionizing caregiving in Kenya by connecting verified, professional caregivers with families who need trustworthy, compassionate care services. We believe every Kenyan family deserves access to quality caregiving solutions.
+                </p>
+
+                <h2 style="color: var(--kenya-green); margin-bottom: 1.5rem;">Our Vision</h2>
+                <p style="margin-bottom: 2rem; font-size: 1.1rem;">
+                    To be Kenya's most trusted caregiving platform, enabling families to find reliable caregivers and caregivers to build fulfilling careers in the care industry.
+                </p>
+
+                <h2 style="color: var(--kenya-green); margin-bottom: 1.5rem;">Why Choose TunzaCare?</h2>
+                <ul style="margin-bottom: 2rem; font-size: 1.1rem; list-style-position: inside;">
+                    <li style="margin-bottom: 1rem;">
+                        <i class="fas fa-check" style="color: var(--kenya-green); margin-right: 0.5rem;"></i>
+                        <strong>Verified Caregivers:</strong> All caregivers undergo thorough background checks and verification
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <i class="fas fa-check" style="color: var(--kenya-green); margin-right: 0.5rem;"></i>
+                        <strong>Nationwide Coverage:</strong> Access to caregivers from all 47 Kenyan counties
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <i class="fas fa-check" style="color: var(--kenya-green); margin-right: 0.5rem;"></i>
+                        <strong>Transparent Ratings:</strong> Real reviews from verified clients ensure quality service
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <i class="fas fa-check" style="color: var(--kenya-green); margin-right: 0.5rem;"></i>
+                        <strong>Secure Payments:</strong> M-Pesa integrated system for safe transactions
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <i class="fas fa-check" style="color: var(--kenya-green); margin-right: 0.5rem;"></i>
+                        <strong>Professional Support:</strong> Dedicated customer support team available 24/7
+                    </li>
+                </ul>
+
+                <h2 style="color: var(--kenya-green); margin-bottom: 1.5rem;">Our Values</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                    <div style="padding: 1.5rem; background: var(--light-green); border-radius: 8px;">
+                        <h4 style="color: var(--kenya-green); margin-bottom: 0.5rem;">Trust</h4>
+                        <p>Building trust between families and caregivers is at the heart of everything we do</p>
+                    </div>
+                    <div style="padding: 1.5rem; background: var(--light-green); border-radius: 8px;">
+                        <h4 style="color: var(--kenya-green); margin-bottom: 0.5rem;">Compassion</h4>
+                        <p>We believe caregiving is a noble profession that deserves respect and fair compensation</p>
+                    </div>
+                    <div style="padding: 1.5rem; background: var(--light-green); border-radius: 8px;">
+                        <h4 style="color: var(--kenya-green); margin-bottom: 0.5rem;">Excellence</h4>
+                        <p>We strive for excellence in every aspect of our service delivery</p>
+                    </div>
+                </div>
+
+                <h2 style="color: var(--kenya-green); margin-bottom: 1.5rem;">Contact Us</h2>
+                <p style="margin-bottom: 0.5rem;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--kenya-green); margin-right: 0.5rem;"></i>
+                    123 Care Street, Nairobi, Kenya
+                </p>
+                <p style="margin-bottom: 0.5rem;">
+                    <i class="fas fa-phone" style="color: var(--kenya-green); margin-right: 0.5rem;"></i>
+                    +254 712 345 678
+                </p>
+                <p>
+                    <i class="fas fa-envelope" style="color: var(--kenya-green); margin-right: 0.5rem;"></i>
+                    info@tunzacare.com
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>
+    <script src="/js/script.js"></script>
+</body>
+</html>

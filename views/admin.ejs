@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <div class="dashboard">
+        <div class="container">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <h1><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+                <p>Welcome to the TunzaCare administration panel</p>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number"><%= stats.totalUsers %></div>
+                    <div class="stat-label">Total Users</div>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--kenya-green);">
+                        <i class="fas fa-users"></i> All Platform Users
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number"><%= stats.totalCaregivers %></div>
+                    <div class="stat-label">Caregivers</div>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--kenya-green);">
+                        <i class="fas fa-hands-helping"></i> Active Caregivers
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number"><%= stats.totalClients %></div>
+                    <div class="stat-label">Clients</div>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--kenya-green);">
+                        <i class="fas fa-user-friends"></i> Registered Clients
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number"><%= stats.pendingVerifications %></div>
+                    <div class="stat-label">Pending Verifications</div>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--kenya-red);">
+                        <i class="fas fa-clock"></i> Awaiting Approval
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number"><%= stats.activeSubscriptions %></div>
+                    <div class="stat-label">Active Subscriptions</div>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--kenya-gold);">
+                        <i class="fas fa-crown"></i> Premium Accounts
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">KES <%= stats.totalRevenue.toLocaleString() %></div>
+                    <div class="stat-label">Total Revenue</div>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--kenya-green);">
+                        <i class="fas fa-money-bill-wave"></i> Platform Earnings
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                <!-- Revenue Chart -->
+                <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <h3 style="margin-bottom: 1rem; color: var(--kenya-green);">
+                        <i class="fas fa-chart-line"></i> Revenue Overview
+                    </h3>
+                    <canvas id="revenueChart" height="200"></canvas>
+                </div>
+                
+                <!-- User Growth Chart -->
+                <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <h3 style="margin-bottom: 1rem; color: var(--kenya-green);">
+                        <i class="fas fa-user-plus"></i> User Growth
+                    </h3>
+                    <canvas id="userGrowthChart" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Activities -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                <!-- Recent Users -->
+                <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <h3 style="margin-bottom: 1rem; color: var(--kenya-green); display: flex; justify-content: space-between; align-items: center;">
+                        <span><i class="fas fa-users"></i> Recent Users</span>
+                        <a href="/admin/users" style="font-size: 0.9rem; color: var(--kenya-red); text-decoration: none;">
+                            View All <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </h3>
+                    
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: var(--gray-light);">
+                                    <th style="padding: 1rem; text-align: left;">Name</th>
+                                    <th style="padding: 1rem; text-align: left;">Email</th>
+                                    <th style="padding: 1rem; text-align: left;">Type</th>
+                                    <th style="padding: 1rem; text-align: left;">Joined</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% recentUsers.forEach(user => { %>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 1rem;">
+                                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                                <div style="width: 30px; height: 30px; background: var(--kenya-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem;">
+                                                    <%= user.firstName.charAt(0) %>
+                                                </div>
+                                                <%= user.firstName %> <%= user.lastName %>
+                                            </div>
+                                        </td>
+                                        <td style="padding: 1rem;"><%= user.email %></td>
+                                        <td style="padding: 1rem;">
+                                            <span style="padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; background: <%= user.userType === 'caregiver' ? 'var(--light-green)' : user.userType === 'client' ? 'var(--light-red)' : 'var(--light-gold)' %>; color: <%= user.userType === 'caregiver' ? 'var(--kenya-green)' : user.userType === 'client' ? 'var(--kenya-red)' : 'var(--kenya-black)' %>;">
+                                                <%= user.userType %>
+                                            </span>
+                                        </td>
+                                        <td style="padding: 1rem;"><%= new Date(user.createdAt).toLocaleDateString() %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Recent Payments -->
+                <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <h3 style="margin-bottom: 1rem; color: var(--kenya-green); display: flex; justify-content: space-between; align-items: center;">
+                        <span><i class="fas fa-money-bill-wave"></i> Recent Payments</span>
+                        <a href="/admin/subscriptions" style="font-size: 0.9rem; color: var(--kenya-red); text-decoration: none;">
+                            View All <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </h3>
+                    
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: var(--gray-light);">
+                                    <th style="padding: 1rem; text-align: left;">User</th>
+                                    <th style="padding: 1rem; text-align: left;">Amount</th>
+                                    <th style="padding: 1rem; text-align: left;">Method</th>
+                                    <th style="padding: 1rem; text-align: left;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% recentPayments.forEach(payment => { %>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 1rem;">
+                                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                                <div style="width: 30px; height: 30px; background: var(--kenya-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem;">
+                                                    <%= payment.User.firstName.charAt(0) %>
+                                                </div>
+                                                <%= payment.User.firstName %> <%= payment.User.lastName %>
+                                            </div>
+                                        </td>
+                                        <td style="padding: 1rem; font-weight: bold; color: var(--kenya-green);">
+                                            KES <%= payment.amount.toLocaleString() %>
+                                        </td>
+                                        <td style="padding: 1rem;">
+                                            <span style="padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; background: #E3F2FD; color: #1976D2;">
+                                                <%= payment.paymentMethod %>
+                                            </span>
+                                        </td>
+                                        <td style="padding: 1rem;">
+                                            <span style="padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; background: <%= payment.status === 'completed' ? '#E8F5E9' : payment.status === 'pending' ? '#FFF8E1' : '#FFEBEE' %>; color: <%= payment.status === 'completed' ? '#2E7D32' : payment.status === 'pending' ? '#F57C00' : '#C62828' %>;">
+                                                <%= payment.status %>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-top: 2rem;">
+                <h3 style="margin-bottom: 1.5rem; color: var(--kenya-green);">
+                    <i class="fas fa-bolt"></i> Quick Actions
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <a href="/admin/verifications" class="btn" style="background: var(--kenya-green); color: white; text-align: center; padding: 1rem;">
+                        <i class="fas fa-user-check"></i> Verify Caregivers
+                        <div style="font-size: 0.8rem; opacity: 0.9;">
+                            <%= stats.pendingVerifications %> pending
+                        </div>
+                    </a>
+                    
+                    <a href="/admin/users" class="btn" style="background: var(--kenya-red); color: white; text-align: center; padding: 1rem;">
+                        <i class="fas fa-user-cog"></i> Manage Users
+                        <div style="font-size: 0.8rem; opacity: 0.9;">
+                            <%= stats.totalUsers %> total
+                        </div>
+                    </a>
+                    
+                    <a href="/admin/subscriptions" class="btn" style="background: var(--kenya-gold); color: var(--kenya-black); text-align: center; padding: 1rem;">
+                        <i class="fas fa-crown"></i> Subscriptions
+                        <div style="font-size: 0.8rem; opacity: 0.9;">
+                            <%= stats.activeSubscriptions %> active
+                        </div>
+                    </a>
+                    
+                    <a href="/admin/analytics" class="btn" style="background: var(--kenya-black); color: white; text-align: center; padding: 1rem;">
+                        <i class="fas fa-chart-bar"></i> Analytics
+                        <div style="font-size: 0.8rem; opacity: 0.9;">
+                            Detailed reports
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+    
+    <script>
+        // Revenue Chart
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        const revenueChart = new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Revenue (KES)',
+                    data: [120000, 190000, 150000, 250000, 220000, 300000],
+                    borderColor: '#006400',
+                    backgroundColor: 'rgba(0, 100, 0, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                }
+            }
+        });
+
+        // User Growth Chart
+        const userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
+        const userGrowthChart = new Chart(userGrowthCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [
+                    {
+                        label: 'Caregivers',
+                        data: [45, 60, 75, 90, 110, 130],
+                        backgroundColor: '#006400'
+                    },
+                    {
+                        label: 'Clients',
+                        data: [80, 100, 120, 150, 180, 220],
+                        backgroundColor: '#BB0000'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

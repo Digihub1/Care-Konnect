@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <div class="form-container" style="margin-top: 3rem; margin-bottom: 3rem;">
+        <h2 style="text-align: center; color: var(--kenya-green); margin-bottom: 2rem;">
+            <i class="fas fa-hands-helping"></i> Caregiver Registration
+        </h2>
+
+        <% if (errors && errors.length > 0) { %>
+            <div class="alert alert-error">
+                <% errors.forEach(error => { %>
+                    <p><i class="fas fa-exclamation-circle"></i> <%= error.msg %></p>
+                <% }); %>
+            </div>
+        <% } %>
+
+        <form method="POST" action="/register/caregiver" style="max-width: 500px; margin: 0 auto;">
+            <fieldset style="border: none;">
+                <legend style="color: var(--kenya-green); margin-bottom: 1rem;">Personal Information</legend>
+
+                <div class="form-group">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" id="firstName" name="firstName" class="form-control" required value="<%= formData?.firstName || '' %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" class="form-control" required value="<%= formData?.lastName || '' %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-control" required value="<%= formData?.email || '' %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" required value="<%= formData?.phone || '' %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="idNumber" class="form-label">ID Number</label>
+                    <input type="text" id="idNumber" name="idNumber" class="form-control" required value="<%= formData?.idNumber || '' %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password (min 8 characters)</label>
+                    <input type="password" id="password" name="password" class="form-control" required minlength="8">
+                </div>
+            </fieldset>
+
+            <fieldset style="border: none; margin-top: 2rem;">
+                <legend style="color: var(--kenya-green); margin-bottom: 1rem;">Professional Information</legend>
+
+                <div class="form-group">
+                    <label for="specialization" class="form-label">Specialization</label>
+                    <select id="specialization" name="specialization" class="form-control" required>
+                        <option value="">Select Specialization</option>
+                        <option value="childcare">Child Care</option>
+                        <option value="elderly">Elderly Care</option>
+                        <option value="disability">Disability Care</option>
+                        <option value="special_needs">Special Needs</option>
+                        <option value="general">General Care</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="experienceYears" class="form-label">Years of Experience</label>
+                    <input type="number" id="experienceYears" name="experienceYears" class="form-control" min="0" max="50" value="<%= formData?.experienceYears || 0 %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="location" class="form-label">Location (City/Town)</label>
+                    <input type="text" id="location" name="location" class="form-control" required value="<%= formData?.location || '' %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="county" class="form-label">County</label>
+                    <input type="text" id="county" name="county" class="form-control" required value="<%= formData?.county || '' %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="bio" class="form-label">Professional Bio</label>
+                    <textarea id="bio" name="bio" class="form-control" rows="4" placeholder="Tell us about your experience and skills"><%= formData?.bio || '' %></textarea>
+                </div>
+            </fieldset>
+
+            <div class="form-group" style="margin-top: 2rem;">
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
+                    <i class="fas fa-user-plus"></i> Create Caregiver Account
+                </button>
+            </div>
+
+            <div style="text-align: center; margin-top: 1rem;">
+                <p>Already have an account? 
+                    <a href="/login" style="color: var(--kenya-green); text-decoration: none; font-weight: bold;">
+                        Login here
+                    </a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <%- include('../partials/footer') %>
+    <script src="/js/script.js"></script>
+</body>
+</html>

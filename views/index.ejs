@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="kenyan-pattern">
+    <!-- Header Partial -->
+    <%- include('partials/header') %>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Welcome to <span style="color: var(--kenya-gold)">TunzaCare</span></h2>
+            <p>Connecting Kenyan families with trusted, verified caregivers nationwide. Your care, our commitment.</p>
+            <div class="cta-buttons">
+                <a href="/register/client" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Find a Caregiver
+                </a>
+                <a href="/register/caregiver" class="btn btn-secondary">
+                    <i class="fas fa-hands-helping"></i> Become a Caregiver
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose TunzaCare?</h2>
+                <p>Africa's premier caregiving platform with Kenyan values at heart</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Verified Caregivers</h3>
+                    <p>All caregivers undergo thorough background checks and verification for your peace of mind.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-kenya"></i>
+                    </div>
+                    <h3>Nationwide Network</h3>
+                    <p>Access caregivers from all 47 counties, wherever you are in Kenya.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Quality Assurance</h3>
+                    <p>Real reviews and ratings from Kenyan families ensure quality service.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Secure Payments</h3>
+                    <p>M-Pesa integrated secure payment system with transaction protection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Caregiver Specializations -->
+    <section class="specializations" style="background-color: var(--light-green); padding: 4rem 2rem;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Caregiving Services</h2>
+                <p>Specialized care for every Kenyan family's needs</p>
+            </div>
+            
+            <div class="specialization-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div class="specialization-card" style="background: white; padding: 2rem; border-radius: 10px; text-align: center;">
+                    <i class="fas fa-baby" style="font-size: 3rem; color: var(--kenya-green); margin-bottom: 1rem;"></i>
+                    <h3>Child Care (Nannies)</h3>
+                    <p>Certified nannies for infant and child care</p>
+                </div>
+                
+                <div class="specialization-card" style="background: white; padding: 2rem; border-radius: 10px; text-align: center;">
+                    <i class="fas fa-wheelchair" style="font-size: 3rem; color: var(--kenya-green); margin-bottom: 1rem;"></i>
+                    <h3>Disability Care</h3>
+                    <p>Specialized caregivers for persons with disabilities</p>
+                </div>
+                
+                <div class="specialization-card" style="background: white; padding: 2rem; border-radius: 10px; text-align: center;">
+                    <i class="fas fa-user-md" style="font-size: 3rem; color: var(--kenya-green); margin-bottom: 1rem;"></i>
+                    <h3>Elderly Care</h3>
+                    <p>Compassionate care for senior citizens</p>
+                </div>
+                
+                <div class="specialization-card" style="background: white; padding: 2rem; border-radius: 10px; text-align: center;">
+                    <i class="fas fa-stethoscope" style="font-size: 3rem; color: var(--kenya-green); margin-bottom: 1rem;"></i>
+                    <h3>Special Needs</h3>
+                    <p>Professional care for special medical needs</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" style="padding: 4rem 2rem;">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Kenyan Families Say</h2>
+                <p>Trusted by families across Kenya</p>
+            </div>
+            
+            <div class="testimonial-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div class="testimonial-card" style="background: var(--kenya-white); padding: 2rem; border-radius: 10px; border-left: 4px solid var(--kenya-green);">
+                    <p style="font-style: italic; margin-bottom: 1rem;">"TunzaCare found us the perfect nanny for our twins. The verification process gave us confidence."</p>
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 50px; height: 50px; background: var(--kenya-green); border-radius: 50%; margin-right: 1rem;"></div>
+                        <div>
+                            <h4 style="color: var(--kenya-green);">Wanjiku M.</h4>
+                            <p style="color: var(--gray-medium);">Nairobi</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card" style="background: var(--kenya-white); padding: 2rem; border-radius: 10px; border-left: 4px solid var(--kenya-red);">
+                    <p style="font-style: italic; margin-bottom: 1rem;">"The disability care specialist we found transformed our lives. Professional and compassionate."</p>
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 50px; height: 50px; background: var(--kenya-red); border-radius: 50%; margin-right: 1rem;"></div>
+                        <div>
+                            <h4 style="color: var(--kenya-red);">Kipchoge O.</h4>
+                            <p style="color: var(--gray-medium);">Eldoret</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" style="background: linear-gradient(135deg, var(--kenya-green), var(--kenya-black)); color: white; padding: 4rem 2rem; text-align: center;">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to Find Your Perfect Caregiver?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Join thousands of Kenyan families who trust TunzaCare for their caregiving needs
+            </p>
+            <a href="/register/client" class="btn" style="background: var(--kenya-gold); color: var(--kenya-black); padding: 1rem 3rem; font-size: 1.1rem;">
+                Get Started Today <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer Partial -->
+    <%- include('partials/footer') %>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

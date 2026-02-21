@@ -10,18 +10,29 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const { sequelize } = require('./models/database');
 
+// Detect platform
+const isVercel = !!process.env.VERCEL;
+
 // Validate required environment variables
 const requiredEnvVars = ['NODE_ENV', 'SESSION_SECRET'];
 // DATABASE_URL can come from Neon connection string OR individual DB variables
 const hasDatabaseConfig = process.env.DATABASE_URL || (process.env.DB_HOST && process.env.DB_USER && process.env.DB_NAME);
 const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
 
+let missingConfig = false;
 if (missingEnvVars.length > 0 || !hasDatabaseConfig) {
     const missing = missingEnvVars.length > 0 ? missingEnvVars.join(', ') : '';
     const dbMissing = !hasDatabaseConfig ? 'DATABASE_URL or (DB_HOST, DB_USER, DB_NAME)' : '';
     const allMissing = [missing, dbMissing].filter(Boolean).join(', ');
     console.error(`❌ Missing required environment variables: ${allMissing}`);
-    process.exit(1);
+    missingConfig = true;
+    if (!isVercel) {
+        // In non-serverless environments we exit because the app requires these to run
+        process.exit(1);
+    } else {
+        // On Vercel, do not exit: export the app instead so the deployment can succeed
+        console.warn('Running on Vercel without full config; exporting app for serverless environment.');
+    }
 }
 
 // Handle unhandled promise rejections
@@ -118,17 +129,28 @@ app.use((req, res, next) => {
 // Database synchronization and server startup
 const startServer = async () => {
     try {
-        await sequelize.sync({ alter: process.env.NODE_ENV === 'development' });
-        console.log('✅ Database synchronized');
-        
-        // Start listening only after DB is ready
+        if (!missingConfig && hasDatabaseConfig) {
+            await sequelize.sync({ alter: process.env.NODE_ENV === 'development' });
+            console.log('✅ Database synchronized');
+        } else {
+            console.warn('Skipping database sync due to missing configuration.');
+        }
+
+        // If running on Vercel (serverless), export the app instead of starting a listener
+        if (isVercel) {
+            module.exports = app;
+            console.log('Exported Express app for Vercel serverless deployment.');
+            return;
+        }
+
+        // Start listening only after DB is ready (non-serverless environments)
         const PORT = process.env.PORT || 3000;
         const server = app.listen(PORT, () => {
             console.log(`\n✅ TunzaCare Portal running on port ${PORT}`);
             console.log(`🌍 Environment: ${process.env.NODE_ENV}`);
             console.log(`📍 Portal Name: TunzaCare (from Swahili "Tunza" meaning "to care for")\n`);
         });
-        
+
         // Graceful shutdown
         process.on('SIGTERM', () => {
             console.log('SIGTERM received, shutting down gracefully...');
@@ -140,7 +162,8 @@ const startServer = async () => {
         });
     } catch (err) {
         console.error('❌ Database sync error:', err);
-        process.exit(1);
+        if (!isVercel) process.exit(1);
+        throw err;
     }
 };
 

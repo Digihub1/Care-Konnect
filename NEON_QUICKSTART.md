@@ -72,6 +72,9 @@ DATABASE_URL="your_connection_string_here" npm run dev
 # Install Vercel CLI
 npm install -g vercel
 
+# Initialize Project (Log in and set up)
+vercel
+
 # Deploy
 vercel --prod
 ```
